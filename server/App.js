@@ -27,18 +27,8 @@ export class App{
     }
     createServer(){
        return http.createServer((req,res) =>{
-           let body = ''
-           req.on('data',(chunk)=>{
-               body += chunk;
-           })
-           req.on('end',()=>{
-               if(body){
-                   req.body = JSON.parse(body);
-               }
-               this.parseMiddleWares(req,res)
-               this.emitter.emit(this.getRouteMask(req.pathname,req.method),req,res);
-           })
-
+           this.parseMiddleWares(req,res)
+           this.emitter.emit(this.getRouteMask(req.pathname,req.method),req,res);
        })
     }
     listen(port){
